@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const servicesSchema = mongoose.Schema({
+const conmentarioSchema = mongoose.Schema({
     services:[
         {
             type:mongoose.Schema.Types.ObjectId,
@@ -12,12 +12,21 @@ const servicesSchema = mongoose.Schema({
         require:true,
         trim:true
     },
-    user: {
+    user:[ {
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    } ],
+    nameUsuario:{
+        type:String,
+        require:true,
+        trim:true
+    },
+    fecha:{
+        type:Date,
+        require:true,
+    },
 })
 
-const Services = mongoose.model('Contentarios',servicesSchema)
+const Contentario = mongoose.model('Contentarios',conmentarioSchema)
 
-export default Services
+export default Contentario

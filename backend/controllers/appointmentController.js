@@ -8,7 +8,9 @@ const createAppointment = async(req, res)=>{
     const appointment = req.body
     appointment.user = req.user._id.toString()
     try {
+        console.log(appointment)
        const newAppointment= new Appointment(appointment)
+       
        const result= await newAppointment.save()
 
        await sendEmailNewAppointment({
@@ -49,7 +51,6 @@ const getAppointmentById= async(req,res)=>{
  const appointment = await Appointment.findById(id).populate('services')
  if(!appointment){
     return handleNotFoundError('La cita no Existe', res)
- 
 }
 if(appointment.user.toString() !==  req.user._id.toString()) {
     const error = new Error('No tienes los permisos')

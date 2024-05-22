@@ -48,6 +48,7 @@ const router = createRouter({
           component: ()=> import('../views/appointments/MyAppointmentsView.vue'),
 
         },
+       
         {
           path:'nueva',
           component: ()=> import('../views/appointments/NewAppointmentLayout.vue'),
@@ -61,7 +62,8 @@ const router = createRouter({
               path:'detalles',
               name:'appointment-details',
               component: ()=> import('../views/appointments/AppointmentView.vue'),
-            }
+            },
+            
           ]
         },
         {
@@ -79,9 +81,33 @@ const router = createRouter({
               component: ()=> import('../views/appointments/AppointmentView.vue'),
             }
           ]
-        }
+        },
+        {
+          path:'comentarios',
+          name:'comentario',
+          component: ()=> import('../views/comentarios/NewComentariosLayout.vue'),
+        },
+        {
+          path:'',
+          component: ()=> import('../views/comentarios/EditComentarioLayout.vue'),
+          children:[
+            {
+              path:'newcomentario/:servicioId',
+              name:'new-comentario',
+              component: ()=> import('../views/comentarios/comentario.vue'),
+            },
+            {
+              path:'comentarios/:servicioId',
+              name:'todo-comentario',
+              component: ()=> import('../views/comentarios/comentariosGeneral.vue'),
+            }
+          ]
+        },
+       
+
       ]
     },
+    
     {
       path:'/auth',
       name:'auth',

@@ -1,4 +1,4 @@
-import { parse, formatISO, parseISO, format} from 'date-fns'
+import { parse, formatISO, parseISO, format,formatDistanceToNow} from 'date-fns'
 import es from 'date-fns/locale/es'
 
 export function convertToISO(strDate){
@@ -17,3 +17,4 @@ export function converToDDMMYYYY(isoDate){
     const formattedDate = format(newDate,'dd/MM/yyyy')
     return formattedDate
 }
+

@@ -6,6 +6,7 @@ import {db} from "./config/db.js"
 import servicesRoutes from "./routes/servicesRouetes.js"
 import authRoutes from "./routes/authRoutes.js"
 import appointmentsRoutes from "./routes/appointmentsRoutes.js"
+import contariosRoutes from "./routes/contariosRoutes.js"
 import userRoutes from './routes/userRoutes.js'
 
 
@@ -41,6 +42,7 @@ app.use(cors(corsOptions))
 app.use('/api/services', servicesRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/appointments', appointmentsRoutes)
+app.use('/api/coments',contariosRoutes )
 app.use('/api/user', userRoutes)
 
 //port

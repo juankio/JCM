@@ -1,18 +1,17 @@
-import express from "express";
-import {getServices, createServis, getServiceById, updateService, deleteService} from '../controllers/servicesController.js'
-import {getComentario, createComentario, getComentarioById, updateComentario, deleteComentario} from '../controllers/ComentariosController.js'
-
+import express from 'express'
+import { createComentario,getComentario,getComentarioServicio} from '../controllers/ComentariosController.js'
+import authMiddleware from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
 router.route('/')
-    .post(createServis)
-    .get(getServices)
+    .post(authMiddleware, createComentario)
+    .get(authMiddleware, getComentario)
     
-router.route('/:id')
-    .get(getServiceById)
-    .put(updateService)
-    .delete(deleteService)
+router.route('/:services')
+.get(authMiddleware, getComentarioServicio)
+//     .put(updateService)
+    // .delete(deleteService)
 
 
 export default router
