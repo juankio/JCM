@@ -10,7 +10,7 @@
 
     <!-- Menú despegable -->
     <div :class="menuOpen ? 'translate-x-0' : '-translate-x-full'"
-      class="fixed inset-y-0 left-0 w-64 bg-gray-800 text-white transition-transform transform z-40">
+      class="fixed inset-y-0 left-0 w-64 pt-10 bg-gray-800 text-white transition-transform transform z-40">
       <div class="p-4">
         <RouterLink v-if="route.name !== 'about'" :to="{ name: 'about' }" class="block py-2 px-4 hover:bg-gray-700">
           ¿Quienes somos?
