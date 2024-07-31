@@ -1,26 +1,85 @@
 <template>
-   <div>
-     <h2 class="text-4xl font-extrabold text-white mt-10">Nuestros servicos para comentarios</h2>
-     <p class="text-white text-lg mt-5"> A continuacion elige un servio para ver sus comentarios</p>
-     <p v-if="comentarios.noComment" class="text-white text-2xl text-center">No hay comentarios</p>
-     <div v-else class="grid grid-cols-2 gap-5 mt-5">
-    <comentariosGeneral
-        v-for="comentarios in comentarios.conmentarios" 
-        :key="comentarios._id"
-        :comentarios="comentarios"
-    />
-</div>
-</div>
-     
+    <div>
+        <h2 class="text-4xl font-extrabold text-white mt-10">Nuestros servicios para comentarios</h2>
+        <p class="text-white text-lg mt-5">A continuación elige un servicio para ver sus comentarios</p>
+
+        <!-- Mostrar mensaje de error si hay un error -->
+        <p v-if="comentariosStore.error" class="text-red-500 text-2xl text-center">{{ comentariosStore.error }}</p>
+
+        <!-- Mostrar skeletons mientras se cargan los comentarios -->
+        <div v-if="comentariosStore.isLoading && !comentariosStore.error" class="grid grid-cols-2 gap-5 mt-5">
+            <div v-for="n in 4" :key="n" class="p-4 bg-white rounded shadow-md">
+                <div class="skeleton h-6 w-1/2"></div>
+                <div class="skeleton h-4 w-1/3"></div>
+                <div class="skeleton h-4 w-2/3"></div>
+                <div class="skeleton h-4 w-full"></div>
+            </div>
+        </div>
+
+        <!-- Mostrar los comentarios reales una vez cargados -->
+        <div v-else class="grid grid-cols-2 gap-5 mt-5">
+            <div v-if="comentariosStore.getComentariosPorServicio.length === 0"
+                class="text-white text-center text-2xl col-span-2">
+                No hay comentarios disponibles para este servicio.
+            </div>
+            <comentariosGeneral v-for="comentario in comentariosStore.getComentariosPorServicio" :key="comentario._id"
+                :comentarios="comentario" />
+        </div>
+    </div>
 </template>
 
 <script setup>
-   import comentariosGeneral from '@/components/comentariosGeneral.vue';
-   import {useComentariosStore} from '@/stores/comentarios';
-  
-  
- 
-   
-   const comentarios = useComentariosStore()
+import { onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useComentariosStore } from '@/stores/comentarios';
+import comentariosGeneral from '@/components/comentariosGeneral.vue';
+
+const comentariosStore = useComentariosStore();
+const route = useRoute();
+const servicioId = route.params.servicioId;
+
+onMounted(() => {
+    comentariosStore.servicio = servicioId;
+    comentariosStore.getComentarios();
+});
+
+watch(() => route.params.servicioId, (newServicioId) => {
+    comentariosStore.servicio = newServicioId;
+    comentariosStore.getComentarios();
+});
 </script>
 
+<style>
+/* Incluir los estilos del skeleton aquí o en un archivo CSS global */
+.skeleton {
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    width: 100%;
+    height: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.skeleton::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -150px;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    from {
+        left: -150px;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+</style>

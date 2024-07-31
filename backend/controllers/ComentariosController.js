@@ -1,87 +1,55 @@
-import Comentario from '../models/contentario.js'
-import {valideObjetId, handleNotFoundError} from '../utils/index.js'
+import Comentario from '../models/comentario.js';
+import { valideObjetId, handleNotFoundError } from '../utils/index.js';
 
+// Crear un nuevo comentario
+const createComentario = async (req, res) => {
+  const comentario = req.body;
+  comentario.user = req.user._id; // Asigna el ID del usuario autenticado
 
-const createComentario = async(req, res)=>{
-    const comentario = req.body;
-    comentario.user = req.user._id; // No es necesario convertirlo a cadena
-    
-    try {
-        const newComentario = new Comentario(comentario);
-        console.log(newComentario);
-        await newComentario.save();
-    
-        res.json({
-            msg: 'Tu comentario se creó correctamente',
-        });
-    } catch (error) {
-    console.log(error)
-    res.status(500).json({
-        msg: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.'
+  try {
+    const newComentario = new Comentario(comentario);
+    await newComentario.save();
+
+    res.json({
+      msg: 'Tu comentario se creó correctamente',
+      comentario: newComentario
     });
-    }
-}
-    
-const getComentario= async(req,res)=>{
-    try {
-        const service = await Comentario.find()
-        res.json(service)
-    } catch (error) {
-        console.log(error)   
-        res.status(500).json({ message: 'Error al obtener comentarios.' }); 
-        }
-    }
-const getComentarioServicio= async(req,res)=>{
-    try {
-        const {services} = req.params;
-        console.log(req.params)
-        
-        const comentarios = await Comentario.find({ services: services } );
-        res.json(comentarios);
-    } catch (error) {
-        console.log(error)    
-        res.status(500).json({ message: 'Error al obtener comentarios.' });
-        }
-    }
-        
-        // const updateAppointmen = async(req,res)=>{
-//     const {id}=   req.params
-//     //validar id  
-//     if(valideObjetId(id, res)) return
-   
-//     const appointment = await Appointment.findById(id).populate('services')
-//     if(!appointment){
-//        return handleNotFoundError('La cita no Existe', res)
-    
-//    }
-//    if(appointment.user.toString() !==  req.user._id.toString()) {
-//        const error = new Error('No tienes los permisos')
-//        return res.status(403).json({msg:error.message})
-//    }
-//    const {date, time, totalAmount, services }= req.body
-//    appointment.date= date
-//    appointment.time= time
-//    appointment.totalAmount= totalAmount
-//    appointment.services= services
-//    try {
-//     const result = await appointment.save()
-    
-//     await sendEmailUpdateAppointment({
-//         date:formatDate(result.date),
-//         time:result.time
-//        })
-//     res.json({
-//         msg:'Cita Actualizada Correctamente' 
-//     })
-//    } catch (error) {
-//     console.log(error)
-    
-//    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      msg: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.'
+    });
+  }
+};
 
-// }
+// Obtener todos los comentarios
+const getComentario = async (req, res) => {
+  try {
+    const comentarios = await Comentario.find().populate('services').populate('user');
+    res.json(comentarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener comentarios.' });
+  }
+};
 
-export{
-    createComentario,
-    getComentario,
-    getComentarioServicio
-}
+// Obtener comentarios por servicio
+const getComentarioServicio = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const comentarios = await Comentario.find({ "services._id": id }).populate('services').populate('user');
+    if (!comentarios) {
+      return res.status(404).json({ message: 'Comentario no encontrado' });
+    }
+    res.status(200).json(comentarios);
+  } catch (error) {
+    res.status(500).json({ message: 'Error del servidor' });
+  }
+};
+
+export {
+  createComentario,
+  getComentario,
+  getComentarioServicio
+};
