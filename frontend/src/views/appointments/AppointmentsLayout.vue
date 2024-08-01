@@ -16,17 +16,17 @@ import { RouterView, RouterLink } from 'vue-router';
                 <nav class="flex gap-2 items-center justify-end">
                     <RouterLink :to="{ name: 'comentario' }"
                         class="p-3 text-gray-200 uppercase text-xs font-black rounded-lg "
-                        :class="route.name === 'comentario' || route.name === 'new-comentario' || route.name === 'todo-comentario' ? 'bg-green-700 text-white' : 'text-white'">
+                        :class="route.name === 'comentario' || route.name === 'new-comentario' || route.name === 'todo-comentario' ? 'bg-green-700 text-white' : 'text-white  hover:text-green-500 hover:scale-105'">
                         Comentarios
                     </RouterLink>
                     <RouterLink :to="{ name: 'my-appointments' }"
-                        class="p-3 text-gray-200 uppercase text-xs font-black rounded-lg"
-                        :class="route.name === 'my-appointments' ? 'bg-green-700 text-white' : ' text-white'">
+                        class="p-3 text-gray-200 uppercase text-xs font-black rounded-lg "
+                        :class="route.name === 'my-appointments' ? 'bg-green-700 text-white ' : ' text-white  hover:text-green-500 hover:scale-105'">
                         Mis Citas
                     </RouterLink>
                     <RouterLink :to="{ name: 'new-appointment' }"
                         class="p-3 text-gray-200 uppercase text-xs font-black rounded-lg "
-                        :class="route.name === 'new-appointment' || route.name === 'appointment-details' ? 'bg-green-700 text-white' : 'text-white'">
+                        :class="route.name === 'new-appointment' || route.name === 'appointment-details' ? 'bg-green-700 text-white' : 'text-white hover:text-green-500 hover:scale-105'">
                         Nueva Cita
                     </RouterLink>
 
