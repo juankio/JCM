@@ -9,9 +9,7 @@ router.route('/')
     .get(authMiddleware, getComentario)
     
 router.route('/:services')
-.get(authMiddleware, getComentarioServicio)
-//     .put(updateService)
-    // .delete(deleteService)
+    .get(authMiddleware, getComentarioServicio)
 
 
 export default router

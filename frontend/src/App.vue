@@ -1,12 +1,13 @@
 <template>
   <div class="md:flex h-screen">
-    <!-- Contenedor izquierdo -->
-    <div class="w-full md:w-1/3 h-auto md:h-auto bg-center bg-no-repeat bg-cover relative flex flex-col justify-start"
+    <!-- Contenedor izquierdo fijo en pantallas medianas y grandes -->
+    <div
+      class="w-full md:w-1/3 h-auto md:h-screen bg-center bg-no-repeat bg-cover relative flex flex-col justify-start md:fixed"
       style="background-size: 120%;">
 
       <!-- Barra de navegación -->
       <div class="w-full bg-black py-2">
-        <nav class="flex gap-2  justify-around">
+        <nav class="flex gap-2 justify-around">
           <RouterLink v-if="route.name !== 'about'" :to="{ name: 'about' }"
             class="p-3 text-gray-200 uppercase text-base font-black rounded-lg transition duration-300 ease-in-out transform hover:text-green-500 hover:scale-105"
             :class="route.name === 'about' ? 'bg-green-700 text-white' : 'text-white'">
@@ -41,7 +42,7 @@
     </div>
 
     <!-- Contenedor derecho -->
-    <div class="w-full md:w-2/3 px-10 py-5 min-h-full">
+    <div class="w-full md:w-2/3 md:ml-auto px-10 py-5 overflow-auto h-screen">
       <router-view />
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
     </div>

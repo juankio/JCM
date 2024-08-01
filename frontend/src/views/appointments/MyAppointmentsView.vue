@@ -9,11 +9,8 @@
             <p v-if="user.noAppointments" class="text-white text-2xl text-center mt-5">No hay citas</p>
 
             <div v-else class="grid grid-cols-1 gap-5 mt-10">
-                <Appointment 
-                  v-for="appointment in user.userAppointment"
-                  :key="appointment._id"
-                  :appointment="appointment"
-                />
+                <Appointment v-for="appointment in user.userAppointment" :key="appointment._id"
+                    :appointment="appointment" />
             </div>
         </div>
 
@@ -22,7 +19,7 @@
 
 <script setup>
 import Appointment from '@/components/Appointment.vue'
-import {useUserStore} from  '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
 
 const user = useUserStore()

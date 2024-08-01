@@ -1,3 +1,4 @@
+// utils/index.js
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { format } from 'date-fns';

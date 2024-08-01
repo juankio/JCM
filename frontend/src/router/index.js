@@ -24,15 +24,20 @@ const router = createRouter({
       component: ()=> import('../views/galeria.vue'),
     },
     {
-      path:'/admin',
-      name:'admin',
-      component: ()=> import('../views/admin/AdminLayout.vue'),
-      meta:{requiresAdmin:true},
-      children:[
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/admin/AdminLayout.vue'),
+      meta: { requiresAdmin: true },
+      children: [
         {
-            path:'',
-            name:'admin-appointments',
-            component: ()=> import('../views/admin/AppointmentsView.vue'),
+          path: 'citas',
+          name: 'admin-appointments',
+          component: () => import('../views/admin/AppointmentsView.vue'),
+        },
+        {
+          path: 'actualizar-catalogo',
+          name: 'update-catalog',
+          component: () => import('../views/admin/UpdateCatalogView.vue'),
         }
       ]
     },
@@ -143,36 +148,36 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach( async(to,from,next)=>{
-  const requiresAuth = to.matched.some(url=>url.meta.requiresAuth)
-  if(requiresAuth){
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some(url => url.meta.requiresAuth)
+  if (requiresAuth) {
     try {
-     const {data}= await AuthAPI.auth() 
-     if (data.admin) {
-       next({name:'admin'})
-      }else{
+      const { data } = await AuthAPI.auth()
+      if (data.admin) {
+        next({ name: 'admin-appointments' })
+      } else {
         next()
-    }
+      }
     } catch (error) {
-      next({name:'login'})
+      next({ name: 'login' })
     }
-  }else{
-    next()
-  }
-})
-router.beforeEach( async(to,from,next)=>{
-  const requiresAdmin = to.matched.some(url=>url.meta.requiresAdmin)
-  if(requiresAdmin){
-   try {
-    await AuthAPI.admin()
-    next()
-  } catch (error) {
-    next({name:'login'})
-  }
-}else{
+  } else {
     next()
   }
 })
 
+router.beforeEach(async (to, from, next) => {
+  const requiresAdmin = to.matched.some(url => url.meta.requiresAdmin)
+  if (requiresAdmin) {
+    try {
+      await AuthAPI.admin()
+      next()
+    } catch (error) {
+      next({ name: 'login' })
+    }
+  } else {
+    next()
+  }
+})
 
 export default router

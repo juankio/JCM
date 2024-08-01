@@ -33,6 +33,7 @@ export const useUserStore= defineStore('user', ()=>{
 
     const getUserName = computed(()=>user.value?.name ?user.value?.name : '')
     const noAppointments = computed(()=> userAppointment.value.length === 0)
+    const isAdmin = computed(() => user.value?.role === 'admin');
 
     return{
         user,
@@ -41,6 +42,7 @@ export const useUserStore= defineStore('user', ()=>{
         loading,
         logout,
         getUserAppointments,
-        noAppointments
+        noAppointments,
+        isAdmin
     }
 })
