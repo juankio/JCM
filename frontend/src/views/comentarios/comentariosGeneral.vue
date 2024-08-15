@@ -1,25 +1,28 @@
 <template>
-    <div>
-        <h2 class="text-4xl font-extrabold text-white mt-10">Nuestros servicios para comentarios</h2>
-        <p class="text-white text-lg mt-5">A continuación elige un servicio para ver sus comentarios</p>
+    <div class="p-4">
+        <h2 class="text-2xl md:text-4xl font-extrabold text-white mt-5 md:mt-10 text-center md:text-left">Nuestros
+            servicios para comentarios</h2>
+        <p class="text-white text-md md:text-lg mt-3 md:mt-5 text-center md:text-left">A continuación elige un servicio
+            para ver sus comentarios</p>
 
         <!-- Mostrar mensaje de error si hay un error -->
-        <p v-if="comentariosStore.error" class="text-red-500 text-2xl text-center">{{ comentariosStore.error }}</p>
+        <p v-if="comentariosStore.error" class="text-red-500 text-lg md:text-2xl text-center mt-5">{{
+            comentariosStore.error }}</p>
 
         <!-- Mostrar skeletons mientras se cargan los comentarios -->
-        <div v-if="comentariosStore.isLoading && !comentariosStore.error" class="grid grid-cols-2 gap-5 mt-5">
+        <div v-if="comentariosStore.isLoading && !comentariosStore.error"
+            class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
             <div v-for="n in 4" :key="n" class="p-4 bg-white rounded shadow-md">
-                <div class="skeleton h-6 w-1/2"></div>
-                <div class="skeleton h-4 w-1/3"></div>
-                <div class="skeleton h-4 w-2/3"></div>
-                <div class="skeleton h-4 w-full"></div>
+                <div class="skeleton h-6 w-3/4"></div>
+                <div class="skeleton h-4 w-1/2 mt-2"></div>
+                <div class="skeleton h-4 w-5/6 mt-2"></div>
+                <div class="skeleton h-4 w-full mt-2"></div>
             </div>
         </div>
 
-        <!-- Mostrar los comentarios reales una vez cargados -->
-        <div v-else class="grid grid-cols-2 gap-5 mt-5">
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
             <div v-if="comentariosStore.getComentariosPorServicio.length === 0"
-                class="text-white text-center text-2xl col-span-2">
+                class="text-white text-center text-lg md:text-2xl col-span-1 md:col-span-2">
                 No hay comentarios disponibles para este servicio.
             </div>
             <comentariosGeneral v-for="comentario in comentariosStore.getComentariosPorServicio" :key="comentario._id"
