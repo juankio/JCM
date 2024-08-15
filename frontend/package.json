@@ -21,6 +21,7 @@
     "pinia": "^2.1.7",
     "primevue": "^3.50.0",
     "vue": "^3.4.15",
+    "vue-burger-menu": "^2.0.5",
     "vue-router": "^4.2.5",
     "vue-star-rating": "^1.7.0",
     "vue-tailwind-datepicker": "^1.6.5",

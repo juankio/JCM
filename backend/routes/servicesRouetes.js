@@ -1,7 +1,7 @@
 // routes/servicesRoutes.js
 import express from "express";
 import { getServices, createServis, getServiceById, updateService, deleteService } from '../controllers/servicesController.js';
-import { valideObjetId } from '../utils/index.js';
+import { valideObjetIdUser, valideObjetIdAdmin } from '../utils/index.js';
 
 const router = express.Router();
 
@@ -10,8 +10,8 @@ router.route('/')
   .get(getServices);
 
 router.route('/:id')
-  .get(valideObjetId, getServiceById)
-  .put(valideObjetId, updateService)
-  .delete(valideObjetId, deleteService);
+  .get(valideObjetIdUser, getServiceById)
+  .put(valideObjetIdAdmin, updateService)
+  .delete(valideObjetIdUser, deleteService);
 
 export default router;

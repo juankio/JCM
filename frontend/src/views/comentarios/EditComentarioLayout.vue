@@ -17,19 +17,15 @@
       </div>
    </div>
 </template>
-
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import ComentarioAPI from '@/api/ComentarioAPI';
 import { useComentariosStore } from '@/stores/comentarios';
-
 const route = useRoute();
 const router = useRouter();
 const { servicioId } = route.params;
-
 const comentarios = useComentariosStore();
-
 onMounted(async () => {
    try {
       const { data } = await ComentarioAPI.getById(servicioId);

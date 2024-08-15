@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
-import {uniqueId} from '../utils/index.js'
+import {uniqueId} from '../utils/userUtils.js'
 
 const  userSchema = mongoose.Schema({
     name:{

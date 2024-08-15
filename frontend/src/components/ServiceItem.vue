@@ -9,7 +9,6 @@
             {{ formatCurrenCy(service.price) }}</p>
     </div>
 </template>
-
 <script setup>
 import { formatCurrenCy } from '../helpers/index';
 import { useAppointmentsStore } from '@/stores/appointments'

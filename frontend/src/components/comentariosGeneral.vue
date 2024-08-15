@@ -1,5 +1,5 @@
 <template>
-  <div class="relative space-y-2 rounded-lg cursor-pointer group bg-white text-white">
+  <div v-if="comentarios.service" class="relative space-y-2 rounded-lg cursor-pointer group bg-white text-white">
     <div class="p-5">
       <div class="flex justify-between mb-2">
         <p class="text-green-600 font-black">
@@ -11,7 +11,7 @@
       </div>
 
       <p class="text-xl text-green-600 font-black">
-        Producto: <span class="font-light text-black">{{ comentarios.services.name }}</span>
+        Producto: <span class="font-light text-black">{{ comentarios.service.name }}</span>
       </p>
 
       <p class="text-xl text-green-600 font-black">
@@ -23,7 +23,6 @@
 
 <script setup>
 import { converToDDMMYYYY } from '@/helpers/date';
-
 defineProps({
   comentarios: {
     type: Object,

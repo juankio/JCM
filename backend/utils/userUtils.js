@@ -1,11 +1,9 @@
-// utils/index.js
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { format } from 'date-fns';
 import es from 'date-fns/locale/es';
 
-
-function valideObjetIdUser(id, res) {
+function valideObjetId(id, res) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const error = new Error('el ID no es valido');
     res.status(400).json({ msg: error.message });
@@ -13,18 +11,6 @@ function valideObjetIdUser(id, res) {
   }
   return true;
 }
-
-const { ObjectId } = mongoose.Types;
-
-const valideObjetIdAdmin = (req, res, next) => {
-  const { id } = req.params;
-
-  if (!id || !ObjectId.isValid(id)) {
-    return res.status(400).json({ message: 'Invalid ID' });
-  }
-
-  next();
-};
 
 function handleNotFoundError(message, res) {
   const error = new Error(message);
@@ -45,8 +31,7 @@ function formatDate(date) {
 }
 
 export {
-  valideObjetIdUser,
-  valideObjetIdAdmin,
+  valideObjetId,
   handleNotFoundError,
   uniqueId,
   generateJWT,

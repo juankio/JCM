@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import {sendEmailVerification, sendEmailResetPassword} from '../emails/authEmail.js'
-import {generateJWT, uniqueId} from '../utils/index.js'
+import {generateJWT, uniqueId} from '../utils/userUtils.js'
 import { json } from 'express';
 
 

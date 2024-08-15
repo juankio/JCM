@@ -1,5 +1,4 @@
 import Comentario from '../models/comentario.js';
-import { valideObjetId, handleNotFoundError } from '../utils/index.js';
 
 // Crear un nuevo comentario
 const createComentario = async (req, res) => {
@@ -25,7 +24,7 @@ const createComentario = async (req, res) => {
 // Obtener todos los comentarios
 const getComentario = async (req, res) => {
   try {
-    const comentarios = await Comentario.find().populate('services').populate('user');
+    const comentarios = await Comentario.find().populate('service').populate('user');
     res.json(comentarios);
   } catch (error) {
     console.error(error);
@@ -38,7 +37,7 @@ const getComentarioServicio = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const comentarios = await Comentario.find({ "services._id": id }).populate('services').populate('user');
+    const comentarios = await Comentario.find({ "service._id": id }).populate('service').populate('user');
     if (!comentarios) {
       return res.status(404).json({ message: 'Comentario no encontrado' });
     }

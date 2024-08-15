@@ -22,18 +22,14 @@
         <RouterView />
     </div>
 </template>
-
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { useComentariosStore } from '@/stores/comentarios';
-
 const router = useRouter();
 const route = useRoute();
 const comentarios = useComentariosStore();
-
 const servicioId = route.params.servicioId;
 comentarios.servicio = servicioId;
-
 const handleSumit = async () => {
     try {
         await comentarios.saveAppointment();
@@ -43,7 +39,6 @@ const handleSumit = async () => {
         console.log(error);
     }
 };
-
 // Limpiar el formulario de comentario
 const clearComentarioForm = () => {
     comentarios.coments = ''; // Limpiar el comentario del store

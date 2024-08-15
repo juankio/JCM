@@ -33,16 +33,13 @@ import { onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useComentariosStore } from '@/stores/comentarios';
 import comentariosGeneral from '@/components/comentariosGeneral.vue';
-
 const comentariosStore = useComentariosStore();
 const route = useRoute();
 const servicioId = route.params.servicioId;
-
 onMounted(() => {
     comentariosStore.servicio = servicioId;
     comentariosStore.getComentarios();
 });
-
 watch(() => route.params.servicioId, (newServicioId) => {
     comentariosStore.servicio = newServicioId;
     comentariosStore.getComentarios();

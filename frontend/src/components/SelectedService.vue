@@ -11,11 +11,9 @@
         </button>
     </div>
 </template>
-
 <script setup>
 import { useAppointmentsStore } from '@/stores/appointments';
 import { formatCurrenCy } from '../helpers/index';
-
 const appointments = useAppointmentsStore()
 defineProps({
     service: {

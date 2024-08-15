@@ -1,10 +1,12 @@
+// models/comentario.js
 import mongoose from 'mongoose';
 
 const comentarioSchema = new mongoose.Schema({
-  services: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Services'
-    },
+  service: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Services',
+    required: true
+  },
   coments: {
     type: String,
     required: true,

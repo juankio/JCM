@@ -47,7 +47,7 @@ export const useComentariosStore = defineStore('comentarios', () => {
     const fechaSalida = fechaEntrada.value.toISOString();
 
     const appointment = {
-      services: servicio.value,
+      service: servicio.value,
       coments: coments.value,
       user: {
         _id: User.user._id,
@@ -84,10 +84,12 @@ export const useComentariosStore = defineStore('comentarios', () => {
     servicios.value = [];
   };
 
-  
+
 
   const getComentariosPorServicio = computed(() => {
-    return comentarios.value.filter(comentario => comentario.services._id === servicio.value);
+    return comentarios.value.filter(comentario => {
+      return comentario.service && comentario.service._id === servicio.value;
+    });
   });
 
   const setSelectedAppointment = (comentario) => {
