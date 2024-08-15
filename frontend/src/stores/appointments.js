@@ -11,6 +11,7 @@ export const useAppointmentsStore= defineStore('appointments', ()=>{
     const services= ref([])
     const date= ref('')
     const time=ref('')
+    const loading = ref(false);
 
     const toast = inject('toast')
     const hours=ref([])
@@ -30,7 +31,6 @@ export const useAppointmentsStore= defineStore('appointments', ()=>{
     watch(date,async()=>{
         time.value= ''
         if (date.value === '') return
-        //Obtenemos las citas
         const {data}= await AppointmentAPI.getByData(date.value)
         appointmentByDate.value= data
         console.log(data)
@@ -62,50 +62,44 @@ export const useAppointmentsStore= defineStore('appointments', ()=>{
                     message:'Solo se pueden escoger 2 productos',
                     type:'error'
                 })
-                // alert('Maximo 2 servicios por cita')
                 return
             }
             services.value.push(service)
         }
         
     }
-   async function saveAppointment(){
-        const appointment={
-            services:services.value.map(service => service._id),
-            date:convertToISO(date.value),
-            time:time.value,
-            totalAmount:totalAmount.value
-        }
-        console.log(appointmentId.value)
-        if (appointmentId.value) {
-            try {
-                const {data}= await AppointmentAPI.updete(appointmentId.value, appointment)  
-                 toast.open({
-                    message:data.msg,
-                    type:'success'
-                 })  
-            console.log(data)
-            } catch (error) {
-                console.log(error)
-                
-            }
+    async function saveAppointment() {
+        loading.value = true;  
+        const appointment = {
+            services: services.value.map(service => service._id),
+            date: convertToISO(date.value),
+            time: time.value,
+            totalAmount: totalAmount.value
+        };
 
-        } else {
-            try {
-                const {data}= await AppointmentAPI.create(appointment)   
-                 toast.open({
-                    message:data.msg,
-                    type:'success'
-                 })  
-            console.log(data)
-            } catch (error) {
-                console.log(error)
-                
+        try {
+            let data;
+            if (appointmentId.value) {
+                ({ data } = await AppointmentAPI.updete(appointmentId.value, appointment) )
+            } else {
+                ({ data } = await AppointmentAPI.create(appointment));
             }
-        } 
-        clearAppointmentDate()
-        User.getUserAppointments()
-                 router.push({name:'my-appointments'})
+            toast.open({
+                message: data.msg,
+                type: 'success'
+            });
+            clearAppointmentDate();
+            User.getUserAppointments();
+            router.push({ name: 'my-appointments' });
+        } catch (error) {
+            console.error(error);
+            toast.open({
+                message: 'Error al guardar la cita',
+                type: 'error'
+            });
+        } finally {
+            loading.value = false;  
+        }
     }
 
 
@@ -161,6 +155,7 @@ export const useAppointmentsStore= defineStore('appointments', ()=>{
         clearAppointmentDate,
         setSelectedAppointment,
         cancelAppointment,
+        loading,
         isServiceSelected,
         services,
         date,
