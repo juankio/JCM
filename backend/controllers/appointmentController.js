@@ -2,7 +2,7 @@
 import Appointment from '../models/appointment.js';
 import { parse, formatISO, startOfDay, endOfDay, isValid } from 'date-fns';
 import { valideObjetIdUser, handleNotFoundError, formatDate } from '../utils/index.js';
-import { sendEmailNewAppointment, sendEmailUpdateAppointment, sendEmailCancelledAppointment } from '../emails/appointmentEmailService.js';
+import { sendEmailNewAppointment, sendEmailUpdateAppointment, sendEmailCancelAppointment } from '../emails/appointmentEmailService.js';
 
 const createAppointment = async (req, res) => {
   const appointment = req.body;
@@ -15,7 +15,10 @@ const createAppointment = async (req, res) => {
 
     await sendEmailNewAppointment({
       date: formatDate(result.date),
-      time: result.time
+      time: result.time,
+      userEmail: req.user.email,
+      userName: req.user.name,
+      adminName: 'Admin'  
     });
     res.json({
       msg: 'Tu Reservacion se realizo correctamente'
@@ -84,7 +87,10 @@ const updateAppointment = async (req, res) => {
 
     await sendEmailUpdateAppointment({
       date: formatDate(result.date),
-      time: result.time
+      time: result.time,
+      userEmail: req.user.email,
+      userName: req.user.name,
+      adminName: 'Admin'  
     });
     res.json({
       msg: 'Cita Actualizada Correctamente'
@@ -110,9 +116,12 @@ const deleteAppointment = async (req, res) => {
   }
 
   try {
-    await sendEmailCancelledAppointment({
+    await sendEmailCancelAppointment({
       date: formatDate(appointment.date),
-      time: appointment.time
+      time: appointment.time,
+      userEmail: req.user.email,
+      userName: req.user.name,
+      adminName: 'Admin'  
     });
     await appointment.deleteOne();
 
