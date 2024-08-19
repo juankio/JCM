@@ -55,7 +55,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const menuOpen = ref(false);
-
+//pruebita
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
